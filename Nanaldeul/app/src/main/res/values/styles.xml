@@ -8,4 +8,15 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+
 </resources>
+
+
+<!--<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">-->
+<!--&lt;!&ndash; Customize your theme here. &ndash;&gt;-->
+<!--<item name="android:background">@drawable/titlebar</item>-->
+<!--<item name="actionBarSize">80dp</item>-->
+<!--<item name="colorPrimary">@color/colorPrimary</item>-->
+<!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+<!--<item name="colorAccent">@color/colorAccent</item>-->
+<!--</style>-->

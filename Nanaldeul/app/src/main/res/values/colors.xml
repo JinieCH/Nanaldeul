@@ -2,5 +2,11 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#724aff</color>
+    <color name="normal_day">#545454</color>
+    <color name="colorMonth">#724aff</color>
+    <color name="selected_day_background">#b8a4ff</color>
+    <color name="selected_day_text">#724aff</color>
+    <color name="main_color">#724aff</color>
+    <color name="side_color">#b8a4ff</color>
 </resources>
