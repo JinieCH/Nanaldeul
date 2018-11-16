@@ -9,6 +9,7 @@
         <attr name="colorMonthName" format="color" />
         <attr name="colorDayName" format="color" />
         <attr name="selected_day_text" format="color" />
+        <attr name="test_color" format="color"/>
         <attr name="textSizeDay" format="dimension"/>
         <attr name="textSizeMonth" format="dimension" />
         <attr name="textSizeDayName" format="dimension" />

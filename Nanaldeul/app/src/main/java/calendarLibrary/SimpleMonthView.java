@@ -141,7 +141,7 @@ class SimpleMonthView extends View
         mMonthTextColor = typedArray.getColor(R.styleable.DayPickerView_colorMonthName, resources.getColor(R.color.colorMonth));
         mDayTextColor = typedArray.getColor(R.styleable.DayPickerView_colorDayName, resources.getColor(R.color.normal_day));
         mDayNumColor = typedArray.getColor(R.styleable.DayPickerView_colorNormalDay, resources.getColor(R.color.normal_day));
-        mPreviousDayColor = typedArray.getColor(R.styleable.DayPickerView_colorPreviousDay, resources.getColor(R.color.normal_day));
+        mPreviousDayColor = typedArray.getColor(R.styleable.DayPickerView_test_color, resources.getColor(R.color.test_color));
         mSelectedDaysColor = typedArray.getColor(R.styleable.DayPickerView_colorSelectedDayBackground, resources.getColor(R.color.selected_day_background));
         mMonthTitleBGColor = typedArray.getColor(R.styleable.DayPickerView_colorSelectedDayText, resources.getColor(R.color.selected_day_text));
 
@@ -157,7 +157,7 @@ class SimpleMonthView extends View
 
         mRowHeight = ((typedArray.getDimensionPixelSize(R.styleable.DayPickerView_calendarHeight, resources.getDimensionPixelOffset(R.dimen.calendar_height)) - MONTH_HEADER_SIZE) / 6);
 
-        isPrevDayEnabled = typedArray.getBoolean(R.styleable.DayPickerView_enablePreviousDay, true);
+        isPrevDayEnabled = typedArray.getBoolean(R.styleable.DayPickerView_enablePreviousDay, false);
 
         initView();
 
@@ -171,7 +171,7 @@ class SimpleMonthView extends View
 	}
 
 	private void drawMonthDayLabels(Canvas canvas) {
-        int y = MONTH_HEADER_SIZE - (MONTH_DAY_LABEL_TEXT_SIZE / 2)+20;
+        int y = MONTH_HEADER_SIZE - (MONTH_DAY_LABEL_TEXT_SIZE / 2)+60;
         int dayWidthHalf = (mWidth - mPadding * 2) / (mNumDays * 2);
 
         for (int i = 0; i < mNumDays; i++) {
@@ -180,15 +180,15 @@ class SimpleMonthView extends View
             mDayLabelCalendar.set(Calendar.DAY_OF_WEEK, calendarDay);
             canvas.drawText(mDateFormatSymbols.getShortWeekdays()[mDayLabelCalendar.get(Calendar.DAY_OF_WEEK)].toUpperCase(Locale.getDefault()), x, y, mMonthDayLabelPaint);
         }
-        int x2 = (2 * 0 + 1) * dayWidthHalf + mPadding - 40;
-        int x3 = (2 * mNumDays + 1) * dayWidthHalf + mPadding - 120;
-        int y2 = MONTH_HEADER_SIZE - (MONTH_DAY_LABEL_TEXT_SIZE / 2) + 40;
+        int x2 = (2 * 0 + 1) * dayWidthHalf + mPadding - 50;
+        int x3 = (2 * mNumDays + 1) * dayWidthHalf + mPadding - 100;
+        int y2 = MONTH_HEADER_SIZE - (MONTH_DAY_LABEL_TEXT_SIZE / 2) + 80;
         canvas.drawLine(x2,y2,x3,y2, mMonthNumPaint);
 	}
 
 	private void drawMonthTitle(Canvas canvas) {
-        int x = (mWidth + 2 * mPadding) / 7;
-        int y = (MONTH_HEADER_SIZE - MONTH_DAY_LABEL_TEXT_SIZE) / 2 + (MONTH_LABEL_TEXT_SIZE / 3);
+        int x = ((mWidth + 2 * mPadding) / 4) - 20;
+        int y = (MONTH_HEADER_SIZE - MONTH_DAY_LABEL_TEXT_SIZE) / 2 + (MONTH_LABEL_TEXT_SIZE / 3) + 20;
         StringBuilder stringBuilder = new StringBuilder(getMonthAndYearString().toLowerCase());
         String monthTitle = monthStringToNum(stringBuilder);
 
@@ -217,19 +217,26 @@ class SimpleMonthView extends View
 		return (mYear == time.year) && (mMonth == time.month) && (monthDay == time.monthDay);
 	}
 
+
     private boolean prevDay(int monthDay, Time time) {
         return ((mYear < time.year)) || (mYear == time.year && mMonth < time.month) || ( mMonth == time.month && monthDay < time.monthDay);
     }
-
 	protected void drawMonthNums(Canvas canvas) {
-        mRowHeight = 150;
-		int y = ((mRowHeight + MINI_DAY_NUMBER_TEXT_SIZE) / 2 - DAY_SEPARATOR_WIDTH + MONTH_HEADER_SIZE);
+        mRowHeight = 130;
+		int y = ((mRowHeight + MINI_DAY_NUMBER_TEXT_SIZE) / 2 - DAY_SEPARATOR_WIDTH + MONTH_HEADER_SIZE) + 20;
 		int paddingDay = (mWidth - 2 * mPadding) / (2 * mNumDays);
 		int dayOffset = findDayOffset();
 		int day = 1;
+        Time beginDay;
 
 		while (day <= mNumCells) {
-			int x = paddingDay * (1 + dayOffset * 2) + mPadding;
+            int x = paddingDay * (1 + dayOffset * 2) + mPadding;
+            if(day == mNumCells){
+                mRowHeight = 160;
+            }
+            else{
+                mRowHeight = 130;
+            }
 			if ((mMonth == mSelectedBeginMonth && mSelectedBeginDay == day && mSelectedBeginYear == mYear) || (mMonth == mSelectedLastMonth && mSelectedLastDay == day && mSelectedLastYear == mYear)) {
                 if (mDrawRect)
                 {
@@ -286,13 +293,6 @@ class SimpleMonthView extends View
             {
                 mMonthNumPaint.setColor(mSelectedDaysColor);
             }
-
-            if (!isPrevDayEnabled && prevDay(day, today) && today.month == mMonth && today.year == mYear)
-            {
-                mMonthNumPaint.setColor(mPreviousDayColor);
-                mMonthNumPaint.setTypeface(Typeface.defaultFromStyle(Typeface.ITALIC));
-            }
-
 			canvas.drawText(String.format("%d", day), x, y, mMonthNumPaint);
 
 			dayOffset++;
@@ -302,10 +302,6 @@ class SimpleMonthView extends View
 			}
 			day++;
 		}
-//        int x1 = paddingDay * (1 + dayOffset * 2) + mPadding;
-//        int y2 = ((mRowHeight + MINI_DAY_NUMBER_TEXT_SIZE) - DAY_SEPARATOR_WIDTH + MONTH_HEADER_SIZE)*2 + 30;
-//        int y3 = ((mRowHeight + MINI_DAY_NUMBER_TEXT_SIZE) - DAY_SEPARATOR_WIDTH + MONTH_HEADER_SIZE)*2 + 300;
-//		canvas.drawLine(x1, y2, x1, y3, mMonthNumPaint);
 	}
 
 	public calendarLibrary.SimpleMonthAdapter.CalendarDay getDayFromLocation(float x, float y) {
@@ -465,50 +461,50 @@ class SimpleMonthView extends View
 	}
 
 	private String monthStringToNum(StringBuilder stringBuilder){
+        String yearStr = stringBuilder.toString().split("\\s")[0];
+        String monthStr = stringBuilder.toString().split("\\s")[1];
+        Log.d("stringBuilderStr", stringBuilder.toString());
+//        int monthNum = 0;
+//        switch (monthStr){
+//            case "january":
+//                monthNum = 1;
+//                break;
+//            case "february":
+//                monthNum = 2;
+//                break;
+//            case "march":
+//                monthNum = 3;
+//                break;
+//            case "april":
+//                monthNum = 4;
+//                break;
+//            case "may":
+//                monthNum = 5;
+//                break;
+//            case "june":
+//                monthNum = 6;
+//                break;
+//            case "july":
+//                monthNum = 7;
+//                break;
+//            case "august":
+//                monthNum = 8;
+//                break;
+//            case "september":
+//                monthNum = 9;
+//                break;
+//            case "october":
+//                monthNum = 10;
+//                break;
+//            case "november":
+//                monthNum = 11;
+//                break;
+//            case "december":
+//                monthNum = 12;
+//                break;
+//        } //핸드폰 설정이 영어일때, 필요
 
-        String monthStr = stringBuilder.toString().split("\\s")[0];
-        String yearStr = stringBuilder.toString().split("\\s")[1];
-
-        int monthNum = 0;
-        switch (monthStr){
-            case "january":
-                monthNum = 1;
-                break;
-            case "february":
-                monthNum = 2;
-                break;
-            case "march":
-                monthNum = 3;
-                break;
-            case "april":
-                monthNum = 4;
-                break;
-            case "may":
-                monthNum = 5;
-                break;
-            case "june":
-                monthNum = 6;
-                break;
-            case "july":
-                monthNum = 7;
-                break;
-            case "august":
-                monthNum = 8;
-                break;
-            case "september":
-                monthNum = 9;
-                break;
-            case "october":
-                monthNum = 10;
-                break;
-            case "november":
-                monthNum = 11;
-                break;
-            case "december":
-                monthNum = 12;
-                break;
-        }
-        return monthNum + "   " + yearStr;
+        Log.d("monthViewStr", yearStr + "   " + monthStr);
+        return yearStr + "   " + monthStr;
     }
-
 }

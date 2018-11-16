@@ -76,6 +76,10 @@ public class viewCalendar extends AppCompatActivity implements calendarLibrary.D
         Log.d("Day Selected", day + " / " + month + " / " + year);
     }
 
+    private boolean compareBeginLastDay(int Beginday, int Beginmonth, int Beginyear, int Lastday, int Lastmonth, int Lastyear) {
+        return ((Lastyear < Beginyear)) || (Lastyear == Beginyear && Lastmonth < Beginmonth) || ( Lastmonth == Beginmonth && Lastday < Beginday);
+    }
+
     @Override
     public void onDateRangeSelected(SimpleMonthAdapter.SelectedDays<SimpleMonthAdapter.CalendarDay> selectedDays)
     {
@@ -90,6 +94,18 @@ public class viewCalendar extends AppCompatActivity implements calendarLibrary.D
             String[] firstDate = selectedDays.getFirst().toString().split(" ");
             String[] lastDate = selectedDays.getLast().toString().split(" ");
 
+            if(compareBeginLastDay(Integer.parseInt(firstDate[2]), Integer.parseInt(firstDate[1]), Integer.parseInt(firstDate[0]), Integer.parseInt(lastDate[2]), Integer.parseInt(lastDate[1]), Integer.parseInt(lastDate[0]))){
+                String tempYear, tempMonth, tempDay;
+                tempYear = lastDate[0];
+                tempMonth = lastDate[1];
+                tempDay = lastDate[2];
+                lastDate[0] = firstDate[0];
+                lastDate[1] = firstDate[1];
+                lastDate[2] = firstDate[2];
+                firstDate[0] = tempYear;
+                firstDate[1] = tempMonth;
+                firstDate[2] = tempDay;
+            }
             String dateRangeSelected = firstDate[0] + "." + firstDate[1] + "." + firstDate[2] + " ~ " + lastDate[0] + "." + lastDate[1] + "." + lastDate[2] + "  등록";
 
             select_date_btn.setText(dateRangeSelected);
