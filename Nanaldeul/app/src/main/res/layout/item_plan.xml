@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cv_item_movie_parent"
+        android:layout_width="215dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_margin="4dp"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="3dp"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/iv_item_plan"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:src="@drawable/profile"
+                app:civ_border_color="@color/main_color"
+                app:civ_border_width="2dp" />
+
+            <TextView
+                android:id="@+id/tv_item_plan_place"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="20dp"
+                android:text="장소"
+                android:textColor="@android:color/black"
+                android:textSize="20dp" />
+
+            <View
+                android:layout_width="20dp"
+                android:layout_height="1.5dp"
+                android:layout_gravity="center"
+
+                android:background="@color/main_color" />
+
+            <TextView
+                android:id="@+id/tv_item_plan_dday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/dday"
+                android:text="디데이"
+                android:paddingRight="8dp"
+                android:paddingLeft="8dp"
+                android:textColor="@color/main_color"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/tv_item_plan_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="날짜"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="15dp" />
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>
